@@ -30,6 +30,11 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-add_executable(solutions two-sum.cpp)
+file(GLOB solutions_SRC
+    "*.h"
+    "*.cpp"
+)
+
+add_executable(solutions ${solutions_SRC})
 target_link_libraries(solutions gtest_main)
 #add_test(NAME generic COMMAND solutions)
