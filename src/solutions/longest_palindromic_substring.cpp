@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <string>
 #include <vector>
 #include "gtest/gtest.h"
@@ -10,7 +11,7 @@ class Solution
 {
 public:
     string
-    longestPalindrome( string s )
+    longestPalindrome_basic( string s )
     {
         if ( s.size( ) < 2 )
         {
@@ -62,6 +63,40 @@ public:
         }
 
         return s.substr( longest_start, longest_len );
+    }
+
+    string
+    longestPalindrome( string s )
+    {
+        int start = 0;
+        int count = 0;
+
+        for ( int i = 0; i < s.size( ); ++i )
+        {
+            const auto len1 = expand_around_center( s, i, i );
+            const auto len2 = expand_around_center( s, i, i + 1 );
+            const auto len = max( len1, len2 );
+            if ( len > count )
+            {
+                count = len;
+                start = i - ( ( len - 1 ) / 2 );
+            }
+        }
+
+        return s.substr( start, count );
+    }
+
+private:
+    inline int
+    expand_around_center( const string& s, int start, int end )
+    {
+        while ( start >= 0 && end < s.size( ) && s[ start ] == s[ end ] )
+        {
+            --start;
+            ++end;
+        }
+
+        return end - start - 1;
     }
 };
 }  // namespace
