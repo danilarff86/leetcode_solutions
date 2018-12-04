@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <string>
 #include "gtest/gtest.h"
 
@@ -35,7 +34,7 @@ public:
 };
 }  // namespace
 
-TEST(OneEditDistance, generic)
+TEST( OneEditDistance, generic )
 {
     Solution sn;
     EXPECT_TRUE( sn.isOneEditDistance( "ab", "acb" ) );
