@@ -19,16 +19,16 @@ struct ListNode
 ListNode*
 create_list( const vector< int >& nums )
 {
-    ListNode* root = nullptr;
-    ListNode** list = &root;
+    ListNode root( 0 );
+    ListNode* node = &root;
 
     for ( auto num : nums )
     {
-        *list = new ListNode( num );
-        list = &( ( *list )->next );
+        node->next = new ListNode( num );
+        node = node->next;
     }
 
-    return root;
+    return root.next;
 }
 
 vector< int >
@@ -49,30 +49,34 @@ public:
     ListNode*
     mergeTwoLists( ListNode* l1, ListNode* l2 )
     {
-        ListNode* res = nullptr;
-        ListNode** res_node = &res;
+        ListNode res( 0 );
+        ListNode* res_node = &res;
 
         while ( l1 != nullptr && l2 != nullptr )
         {
-            auto inc_node = l1->val < l2->val ? &l1 : &l2;
-            auto tmp_node = *inc_node;
-            *inc_node = ( *inc_node )->next;
-
-            *res_node = tmp_node;
-            res_node = &( ( *res_node )->next );
+            if ( l1->val < l2->val )
+            {
+                res_node->next = l1;
+                l1 = l1->next;
+            }
+            else
+            {
+                res_node->next = l2;
+                l2 = l2->next;
+            }
+            res_node = res_node->next;
         }
 
-        auto final_node = l1 != nullptr ? &l1 : &l2;
-        while ( *final_node != nullptr )
+        if ( l1 != nullptr )
         {
-            auto tmp_node = *final_node;
-            *final_node = ( *final_node )->next;
-
-            *res_node = tmp_node;
-            res_node = &( ( *res_node )->next );
+            res_node->next = l1;
+        }
+        else
+        {
+            res_node->next = l2;
         }
 
-        return res;
+        return res.next;
     }
 };
 }  // namespace
