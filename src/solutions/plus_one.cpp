@@ -12,22 +12,17 @@ public:
     plusOne( const vector< int >& digits )
     {
         auto res = digits;
-        bool plus_one = true;
-        for ( int i = digits.size( ) - 1; i >= 0 && plus_one; --i )
+
+        for ( int i = digits.size( ) - 1; i >= 0; --i )
         {
-            plus_one = false;
-            if ( ++res[ i ] == 10 )
+            if ( ++res[ i ] != 10 )
             {
-                res[ i ] = 0;
-                plus_one = true;
+                return res;
             }
+            res[ i ] = 0;
         }
 
-        if ( plus_one )
-        {
-            res.insert( res.begin( ), 1 );
-        }
-
+        res.insert( res.begin( ), 1 );
         return res;
     }
 };
