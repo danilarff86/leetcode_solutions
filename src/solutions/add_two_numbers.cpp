@@ -1,48 +1,11 @@
-#include <vector>
 #include "gtest/gtest.h"
+#include "linked_list.h"
 
 using namespace std;
+using namespace linked_list;
 
 namespace
 {
-struct ListNode
-{
-    int val;
-    ListNode* next;
-    ListNode( int x )
-        : val( x )
-        , next( NULL )
-    {
-    }
-};
-
-ListNode*
-create_list( const vector< int >& nums )
-{
-    ListNode root( 0 );
-    ListNode* node = &root;
-
-    for ( auto num : nums )
-    {
-        node->next = new ListNode( num );
-        node = node->next;
-    }
-
-    return root.next;
-}
-
-vector< int >
-to_vec( const ListNode* node )
-{
-    vector< int > res;
-    while ( node != nullptr )
-    {
-        res.push_back( node->val );
-        node = node->next;
-    }
-    return res;
-}
-
 class Solution
 {
 public:
@@ -95,16 +58,20 @@ TEST( AddTwoNumbers, generic )
 {
     Solution sn;
     EXPECT_EQ( vector< int >( {7, 6, 4} ),
-               to_vec( sn.addTwoNumbers( create_list( {2} ), create_list( {5, 6, 4} ) ) ) );
-    EXPECT_EQ( vector< int >( {8, 1} ),
-               to_vec( sn.addTwoNumbers( create_list( {9} ), create_list( {9} ) ) ) );
-    EXPECT_EQ( vector< int >( {8, 0, 1} ),
-               to_vec( sn.addTwoNumbers( create_list( {9} ), create_list( {9, 9} ) ) ) );
+               list_to_vector(
+                   sn.addTwoNumbers( list_from_vector( {2} ), list_from_vector( {5, 6, 4} ) ) ) );
+    EXPECT_EQ( vector< int >( {8, 1} ), list_to_vector( sn.addTwoNumbers(
+                                            list_from_vector( {9} ), list_from_vector( {9} ) ) ) );
+    EXPECT_EQ(
+        vector< int >( {8, 0, 1} ),
+        list_to_vector( sn.addTwoNumbers( list_from_vector( {9} ), list_from_vector( {9, 9} ) ) ) );
     EXPECT_EQ( vector< int >( {7, 0, 8} ),
-               to_vec( sn.addTwoNumbers( create_list( {2, 4, 3} ), create_list( {5, 6, 4} ) ) ) );
-    EXPECT_EQ( vector< int >( {0} ),
-               to_vec( sn.addTwoNumbers( create_list( {0} ), create_list( {0} ) ) ) );
-    EXPECT_EQ( vector< int >( {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1} ),
-               to_vec( sn.addTwoNumbers( create_list( {9} ),
-                                         create_list( {1, 9, 9, 9, 9, 9, 9, 9, 9, 9} ) ) ) );
+               list_to_vector( sn.addTwoNumbers( list_from_vector( {2, 4, 3} ),
+                                                 list_from_vector( {5, 6, 4} ) ) ) );
+    EXPECT_EQ( vector< int >( {0} ), list_to_vector( sn.addTwoNumbers(
+                                         list_from_vector( {0} ), list_from_vector( {0} ) ) ) );
+    EXPECT_EQ(
+        vector< int >( {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1} ),
+        list_to_vector( sn.addTwoNumbers( list_from_vector( {9} ),
+                                          list_from_vector( {1, 9, 9, 9, 9, 9, 9, 9, 9, 9} ) ) ) );
 }

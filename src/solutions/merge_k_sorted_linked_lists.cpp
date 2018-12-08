@@ -1,49 +1,12 @@
 #include <queue>
-#include <vector>
 #include "gtest/gtest.h"
+#include "linked_list.h"
 
 using namespace std;
+using namespace linked_list;
 
 namespace
 {
-struct ListNode
-{
-    int val;
-    ListNode* next;
-    ListNode( int x )
-        : val( x )
-        , next( NULL )
-    {
-    }
-};
-
-ListNode*
-create_list( const vector< int >& nums )
-{
-    ListNode root( 0 );
-    ListNode* node = &root;
-
-    for ( auto num : nums )
-    {
-        node->next = new ListNode( num );
-        node = node->next;
-    }
-
-    return root.next;
-}
-
-vector< int >
-to_vec( const ListNode* node )
-{
-    vector< int > res;
-    while ( node != nullptr )
-    {
-        res.push_back( node->val );
-        node = node->next;
-    }
-    return res;
-}
-
 class Solution_heap
 {
 public:
@@ -143,7 +106,8 @@ TEST( MergeKSortedLinkedLists, generic )
 {
     Solution sn;
     EXPECT_EQ( vector< int >( {1, 1, 2, 3, 4, 4, 5, 6} ),
-               to_vec( sn.mergeKLists( vector< ListNode* >{
-                   create_list( {1, 4, 5} ), create_list( {1, 3, 4} ), create_list( {2, 6} )} ) ) );
-    EXPECT_EQ( vector< int >( ), to_vec( sn.mergeKLists( vector< ListNode* >{} ) ) );
+               list_to_vector( sn.mergeKLists(
+                   vector< ListNode* >{list_from_vector( {1, 4, 5} ), list_from_vector( {1, 3, 4} ),
+                                       list_from_vector( {2, 6} )} ) ) );
+    EXPECT_EQ( vector< int >( ), list_to_vector( sn.mergeKLists( vector< ListNode* >{} ) ) );
 }

@@ -1,48 +1,11 @@
-#include <vector>
 #include "gtest/gtest.h"
+#include "linked_list.h"
 
 using namespace std;
+using namespace linked_list;
 
 namespace
 {
-struct ListNode
-{
-    int val;
-    ListNode* next;
-    ListNode( int x )
-        : val( x )
-        , next( NULL )
-    {
-    }
-};
-
-ListNode*
-create_list( const vector< int >& nums )
-{
-    ListNode root( 0 );
-    ListNode* node = &root;
-
-    for ( auto num : nums )
-    {
-        node->next = new ListNode( num );
-        node = node->next;
-    }
-
-    return root.next;
-}
-
-vector< int >
-to_vec( const ListNode* node )
-{
-    vector< int > res;
-    while ( node != nullptr )
-    {
-        res.push_back( node->val );
-        node = node->next;
-    }
-    return res;
-}
-
 class Solution
 {
 public:
@@ -71,5 +34,5 @@ TEST( SwapNodesInPairs, generic )
 {
     Solution sn;
     EXPECT_EQ( vector< int >( {2, 1, 4, 3} ),
-               to_vec( sn.swapPairs( create_list( {1, 2, 3, 4} ) ) ) );
+               list_to_vector( sn.swapPairs( list_from_vector( {1, 2, 3, 4} ) ) ) );
 }
