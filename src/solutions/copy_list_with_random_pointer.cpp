@@ -8,7 +8,7 @@ using namespace linked_list;
 
 namespace
 {
-class Solution
+class Solution_hash
 {
 public:
     RandomListNode*
@@ -31,6 +31,46 @@ public:
         while ( head_node != nullptr )
         {
             res_node->next->random = mapping[ head_node->random ];
+            head_node = head_node->next;
+            res_node = res_node->next;
+        }
+
+        return res.next;
+    }
+};
+
+class Solution
+{
+public:
+    RandomListNode*
+    copyRandomList( RandomListNode* head )
+    {
+        auto head_node = head;
+        while ( head_node != nullptr )
+        {
+            auto new_node = new RandomListNode( head_node->label );
+            new_node->next = head_node->next;
+            head_node->next = new_node;
+            head_node = head_node->next->next;
+        }
+
+        head_node = head;
+        while ( head_node != nullptr )
+        {
+            if ( head_node->random != nullptr )
+            {
+                head_node->next->random = head_node->random->next;
+            }
+            head_node = head_node->next->next;
+        }
+
+        RandomListNode res( 0 );
+        auto res_node = &res;
+        head_node = head;
+        while ( head_node != nullptr )
+        {
+            res_node->next = head_node->next;
+            head_node->next = head_node->next->next;
             head_node = head_node->next;
             res_node = res_node->next;
         }
