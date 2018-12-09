@@ -2,13 +2,14 @@
 #include "gtest/gtest.h"
 
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 using namespace binary_tree;
 
 namespace
 {
-class Solution
+class Solution_depth_first_traversal
 {
 public:
     int
@@ -27,6 +28,46 @@ public:
             return minDepth( root->left ) + 1;
         }
         return std::min( minDepth( root->left ), minDepth( root->right ) ) + 1;
+    }
+};
+
+class Solution
+{
+public:
+    int
+    minDepth( const TreeNode* root )
+    {
+        if ( root == nullptr )
+        {
+            return 0;
+        }
+        int depth = 1;
+        auto* right_most = root;
+        queue< const TreeNode* > q;
+        q.push( root );
+        while ( !q.empty( ) )
+        {
+            auto node = q.front( );
+            q.pop( );
+            if ( node->right == nullptr && node->left == nullptr )
+            {
+                break;
+            }
+            if ( node->left != nullptr )
+            {
+                q.push( node->left );
+            }
+            if ( node->right != nullptr )
+            {
+                q.push( node->right );
+            }
+            if ( node == right_most )
+            {
+                ++depth;
+                right_most = ( node->right != nullptr ) ? node->right : node->left;
+            }
+        }
+        return depth;
     }
 };
 
