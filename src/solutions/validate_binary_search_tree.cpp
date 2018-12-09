@@ -8,7 +8,7 @@ using namespace binary_tree;
 
 namespace
 {
-class Solution
+class Solution_top_down_recursion
 {
 public:
     bool
@@ -32,6 +32,41 @@ private:
         return true;
     }
 };
+
+class Solution
+{
+public:
+    bool
+    isValidBST( TreeNode* root )
+    {
+        prev = nullptr;
+        return is_monotonic_increasing( root );
+    }
+
+private:
+    bool
+    is_monotonic_increasing( TreeNode* node )
+    {
+        if ( node == nullptr )
+        {
+            return true;
+        }
+
+        if ( is_monotonic_increasing( node->left ) )
+        {
+            if ( prev != nullptr && node->val <= prev->val )
+            {
+                return false;
+            }
+            prev = node;
+            return is_monotonic_increasing( node->right );
+        }
+        return false;
+    }
+
+private:
+    TreeNode* prev;
+};
 }  // namespace
 
 TEST( ValidateBinarySearchTree, generic )
@@ -39,5 +74,6 @@ TEST( ValidateBinarySearchTree, generic )
     Solution sn;
     EXPECT_FALSE( sn.isValidBST( bt_from_vec( {5, 1, 4, -1, -1, 3, 6} ) ) );
     EXPECT_TRUE( sn.isValidBST( bt_from_vec( {2, 1, 3} ) ) );
+    EXPECT_FALSE( sn.isValidBST( bt_from_vec( {2, 5, 3} ) ) );
     EXPECT_FALSE( sn.isValidBST( bt_from_vec( {int( -2147483648 ), int( -2147483648 )} ) ) );
 }
