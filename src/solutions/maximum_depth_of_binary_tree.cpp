@@ -14,16 +14,8 @@ public:
     int
     maxDepth( const TreeNode* root )
     {
-        return max_depth( root, 0 );
-    }
-
-private:
-    int
-    max_depth( const TreeNode* node, int level )
-    {
-        return node != nullptr ? std::max( max_depth( node->left, level + 1 ),
-                                           max_depth( node->right, level + 1 ) )
-                               : level;
+        return root == nullptr ? 0
+                               : std::max( maxDepth( root->left ), maxDepth( root->right ) ) + 1;
     }
 };
 
