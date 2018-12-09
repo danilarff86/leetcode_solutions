@@ -1,8 +1,6 @@
 #include "binary_tree.h"
 #include "gtest/gtest.h"
 
-#include <limits>
-
 using namespace std;
 using namespace binary_tree;
 
@@ -54,12 +52,11 @@ private:
 
         if ( is_monotonic_increasing( node->left ) )
         {
-            if ( prev != nullptr && node->val <= prev->val )
+            if ( prev == nullptr || node->val > prev->val )
             {
-                return false;
+                prev = node;
+                return is_monotonic_increasing( node->right );
             }
-            prev = node;
-            return is_monotonic_increasing( node->right );
         }
         return false;
     }
