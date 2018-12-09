@@ -1,7 +1,6 @@
 #include "binary_tree.h"
 #include "gtest/gtest.h"
 
-#include <cstdint>
 #include <limits>
 
 using namespace std;
@@ -15,20 +14,19 @@ public:
     bool
     isValidBST( TreeNode* root )
     {
-        return is_valid_subtree( root, numeric_limits< int64_t >::min( ),
-                                 numeric_limits< int64_t >::max( ) );
+        return is_valid_subtree( root, nullptr, nullptr );
     }
 
 private:
     bool
-    is_valid_subtree( TreeNode* node, int64_t min_val, int64_t max_val )
+    is_valid_subtree( TreeNode* node, TreeNode* left_node, TreeNode* right_node )
     {
         if ( node != nullptr )
         {
-            const auto node_val = int64_t( node->val );
-            auto const node_valid = node_val >= min_val && node_val <= max_val;
-            return node_valid && is_valid_subtree( node->left, min_val, node_val - 1 )
-                   && is_valid_subtree( node->right, node_val + 1, max_val );
+            const auto node_valid = ( left_node == nullptr || node->val > left_node->val )
+                                    && ( right_node == nullptr || node->val < right_node->val );
+            return node_valid && is_valid_subtree( node->left, left_node, node )
+                   && is_valid_subtree( node->right, node, right_node );
         }
 
         return true;
