@@ -3,93 +3,120 @@
 
 #include <algorithm>
 #include <queue>
+#include <vector>
 
 namespace binary_tree
 {
 using namespace std;
 
-vector< int >
-bt_to_vec( const TreeNode* node )
+string
+get_trim_str( const string& str )
 {
-    if ( node == nullptr )
-    {
-        return {};
-    }
-
-    queue< const TreeNode* > node_queue;
-    node_queue.push( node );
-    vector< int > res;
-    res.push_back( node->val );
-
-    while ( !node_queue.empty( ) )
-    {
-        auto node = node_queue.front( );
-        node_queue.pop( );
-
-        if ( node->left != nullptr )
-        {
-            res.push_back( node->left->val );
-            node_queue.push( node->left );
-        }
-        else
-        {
-            res.push_back( -1 );
-        }
-
-        if ( node->right != nullptr )
-        {
-            res.push_back( node->right->val );
-            node_queue.push( node->right );
-        }
-        else
-        {
-            res.push_back( -1 );
-        }
-    }
-
-    res.erase( find_if( res.rbegin( ), res.rend( ), []( int v ) { return v >= 0; } ).base( ),
-               res.end( ) );
-
+    auto res = str;
+    res.erase( res.begin( ),
+               find_if( res.begin( ), res.end( ), []( int ch ) { return !isspace( ch ); } ) );
+    res.erase(
+        find_if( res.rbegin( ), res.rend( ), []( int ch ) { return !isspace( ch ); } ).base( ),
+        res.end( ) );
     return res;
 }
 
-TreeNode*
-bt_from_vec( const vector< int >& data )
+string
+bt_to_str( const TreeNode* root )
 {
-    if ( data.empty( ) )
+    if ( root == nullptr )
+    {
+        return "[]";
+    }
+
+    static const auto null_node = "null, ";
+    static const auto null_node_len = 6;
+
+    string output = "";
+    queue< const TreeNode* > q;
+    q.push( root );
+    while ( !q.empty( ) )
+    {
+        auto node = q.front( );
+        q.pop( );
+
+        if ( node == nullptr )
+        {
+            output += null_node;
+            continue;
+        }
+
+        output += to_string( node->val ) + ", ";
+        q.push( node->left );
+        q.push( node->right );
+    }
+
+    auto compare_with_null = [&](int i) {
+        if (i < 0)
+        {
+            return false;
+        }
+        int j = 0;
+        while (j < null_node_len && output[i++] == null_node[j])
+        {
+            ++j;
+        }
+        return j == null_node_len;
+    };
+
+    auto output_end = output.length();
+    while (compare_with_null(output_end - 6))
+    {
+        output_end -= 6;
+    }
+
+    return "[" + output.substr(0, output_end - 2) + "]";
+}
+
+TreeNode*
+bt_from_str( const std::string& str )
+{
+    auto input = get_trim_str( str );
+    input = input.substr( 1, input.length( ) - 2 );
+    if ( input.empty( ) )
     {
         return nullptr;
     }
 
-    auto data_it = data.begin( );
+    stringstream ss;
+    ss.str( input );
+    string item;
+    char delim = ',';
 
-    TreeNode* root = new TreeNode( *data_it++ );
+    if ( !getline( ss, item, delim ) )
+    {
+        return nullptr;
+    }
+
+    TreeNode* root = new TreeNode( std::stoi( item ) );
     queue< TreeNode* > node_queue;
     node_queue.push( root );
 
-    while ( data_it != data.end( ) )
+    while ( getline( ss, item, delim ) )
     {
         TreeNode* node = node_queue.front( );
         node_queue.pop( );
 
-        auto item = *data_it++;
-
-        if ( item != -1 )
+        item = get_trim_str( item );
+        if ( item != "null" )
         {
-            node->left = new TreeNode( item );
+            node->left = new TreeNode( std::stoi( item ) );
             node_queue.push( node->left );
         }
 
-        if ( data_it == data.end( ) )
+        if ( !getline( ss, item, delim ) )
         {
             break;
         }
-
-        item = *data_it++;
-
-        if ( item != -1 )
+        item = get_trim_str( item );
+        if ( item != "null" )
         {
-            node->right = new TreeNode( item );
+            node->right = new TreeNode( std::stoi( item ) );
             node_queue.push( node->right );
         }
     }
@@ -100,8 +127,8 @@ bt_from_vec( const vector< int >& data )
 TEST( BinaryTree, generic )
 {
     {
-        vector< int > v{5, 1, 4, -1, -1, 3, 6};
-        EXPECT_EQ( v, bt_to_vec( bt_from_vec( v ) ) );
+        auto data = "[5, 1, 4, null, null, 3, 6]";
+        EXPECT_EQ( data, bt_to_str( bt_from_str( data ) ) );
     }
 }
 

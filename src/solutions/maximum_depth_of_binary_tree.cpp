@@ -24,5 +24,5 @@ public:
 TEST( MaximumDepthOfBinaryTree, generic )
 {
     Solution sn;
-    EXPECT_EQ( 3, sn.maxDepth( bt_from_vec( {3, 9, 20, -1, -1, 15, 7} ) ) );
+    EXPECT_EQ( 3, sn.maxDepth( bt_from_str( "[3, 9, 20, null, null, 15, 7]" ) ) );
 }

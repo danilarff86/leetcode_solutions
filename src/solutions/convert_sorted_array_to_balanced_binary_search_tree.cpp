@@ -50,6 +50,6 @@ private:
 TEST( ConvertSortedArrayToBalancedBinarySearchTree, generic )
 {
     Solution sn;
-    EXPECT_EQ( vector< int >( {0, -3, 9, -10, -1, 5} ),
-               bt_to_vec( sn.sortedArrayToBST( vector< int >{-10, -3, 0, 5, 9} ) ) );
+    EXPECT_EQ( "[0, -3, 9, -10, null, 5]",
+               bt_to_str( sn.sortedArrayToBST( vector< int >{-10, -3, 0, 5, 9} ) ) );
 }

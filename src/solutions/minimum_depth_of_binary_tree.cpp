@@ -76,6 +76,6 @@ public:
 TEST( MinimumDepthOfBinaryTree, generic )
 {
     Solution sn;
-    EXPECT_EQ( 2, sn.minDepth( bt_from_vec( {3, 9, 20, -1, -1, 15, 7} ) ) );
-    EXPECT_EQ( 2, sn.minDepth( bt_from_vec( {1, 2} ) ) );
+    EXPECT_EQ( 2, sn.minDepth( bt_from_str( "[3, 9, 20, null, null, 15, 7]" ) ) );
+    EXPECT_EQ( 2, sn.minDepth( bt_from_str( "[1, 2]" ) ) );
 }

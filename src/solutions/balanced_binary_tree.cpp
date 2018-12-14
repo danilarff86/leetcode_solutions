@@ -47,6 +47,6 @@ private:
 TEST( BalancedBinaryTree, generic )
 {
     Solution sn;
-    EXPECT_TRUE( sn.isBalanced( bt_from_vec( {3, 9, 20, -1, -1, 15, 7} ) ) );
-    EXPECT_FALSE( sn.isBalanced( bt_from_vec( {1, 2, 2, 3, 3, -1, -1, 4, 4} ) ) );
+    EXPECT_TRUE( sn.isBalanced( bt_from_str( "[3, 9, 20, null, null, 15, 7]" ) ) );
+    EXPECT_FALSE( sn.isBalanced( bt_from_str( "[1, 2, 2, 3, 3, null, null, 4, 4]" ) ) );
 }

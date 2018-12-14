@@ -69,8 +69,8 @@ private:
 TEST( ValidateBinarySearchTree, generic )
 {
     Solution sn;
-    EXPECT_FALSE( sn.isValidBST( bt_from_vec( {5, 1, 4, -1, -1, 3, 6} ) ) );
-    EXPECT_TRUE( sn.isValidBST( bt_from_vec( {2, 1, 3} ) ) );
-    EXPECT_FALSE( sn.isValidBST( bt_from_vec( {2, 5, 3} ) ) );
-    EXPECT_FALSE( sn.isValidBST( bt_from_vec( {int( -2147483648 ), int( -2147483648 )} ) ) );
+    EXPECT_FALSE( sn.isValidBST( bt_from_str( "[5, 1, 4, null, null, 3, 6]" ) ) );
+    EXPECT_TRUE( sn.isValidBST( bt_from_str( "[2, 1, 3]" ) ) );
+    EXPECT_FALSE( sn.isValidBST( bt_from_str( "[2, 5, 3]" ) ) );
+    EXPECT_FALSE( sn.isValidBST( bt_from_str( "[-2147483648, -2147483648]" ) ) );
 }

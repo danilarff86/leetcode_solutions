@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <string>
 
 namespace binary_tree
 {
@@ -17,6 +17,6 @@ struct TreeNode
     }
 };
 
-std::vector< int > bt_to_vec( const TreeNode* node );
-TreeNode* bt_from_vec( const std::vector< int >& data );
+std::string bt_to_str(const TreeNode* root);
+TreeNode* bt_from_str(const std::string & str);
 }  // namespace binary_tree
