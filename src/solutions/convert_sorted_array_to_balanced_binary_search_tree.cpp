@@ -15,34 +15,22 @@ public:
     TreeNode*
     sortedArrayToBST( vector< int >& nums )
     {
-        TreeNode* root = nullptr;
-        if ( !nums.empty( ) )
-        {
-            root = new TreeNode( 0 );
-            array_to_tree( root, nums.begin( ), nums.end( ) );
-        }
-        return root;
+        return array_to_tree( nums, 0, nums.size( ) - 1 );
     }
 
 private:
-    void
-    array_to_tree( TreeNode* node,
-                   vector< int >::const_iterator start,
-                   vector< int >::const_iterator end )
+    TreeNode*
+    array_to_tree( vector< int >& nums, int start, int end )
     {
-        const auto lenght = distance( start, end );
-        const auto half_lenght = lenght / 2u;
-        node->val = *( start + half_lenght );
-        if ( half_lenght > 0 )
+        if ( start > end )
         {
-            node->left = new TreeNode( 0 );
-            array_to_tree( node->left, start, start + half_lenght );
+            return nullptr;
         }
-        if ( ( half_lenght + 1 ) < lenght )
-        {
-            node->right = new TreeNode( 0 );
-            array_to_tree( node->right, start + half_lenght + 1, end );
-        }
+        const auto middle = ( end + start ) / 2;
+        auto node = new TreeNode( nums[ middle ] );
+        node->left = array_to_tree( nums, start, middle - 1 );
+        node->right = array_to_tree( nums, middle + 1, end );
+        return node;
     }
 };
 }  // namespace
@@ -50,6 +38,6 @@ private:
 TEST( ConvertSortedArrayToBalancedBinarySearchTree, generic )
 {
     Solution sn;
-    EXPECT_EQ( "[0, -3, 9, -10, null, 5]",
+    EXPECT_EQ( "[0, -10, 5, null, -3, null, 9]",
                bt_to_str( sn.sortedArrayToBST( vector< int >{-10, -3, 0, 5, 9} ) ) );
 }
