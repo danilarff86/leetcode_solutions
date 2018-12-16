@@ -105,9 +105,14 @@ private:
 TEST( MergeKSortedLinkedLists, generic )
 {
     Solution sn;
-    EXPECT_EQ( vector< int >( {1, 1, 2, 3, 4, 4, 5, 6} ),
-               list_to_vector( sn.mergeKLists(
-                   vector< ListNode* >{list_from_vector( {1, 4, 5} ), list_from_vector( {1, 3, 4} ),
-                                       list_from_vector( {2, 6} )} ) ) );
-    EXPECT_EQ( vector< int >( ), list_to_vector( sn.mergeKLists( vector< ListNode* >{} ) ) );
+    {
+        vector< ListNode* > lists{list_from_vector( {1, 4, 5} ), list_from_vector( {1, 3, 4} ),
+                                  list_from_vector( {2, 6} )};
+        EXPECT_EQ( vector< int >( {1, 1, 2, 3, 4, 4, 5, 6} ),
+                   list_to_vector( sn.mergeKLists( lists ) ) );
+    }
+    {
+        vector< ListNode* > lists{};
+        EXPECT_EQ( vector< int >( ), list_to_vector( sn.mergeKLists( lists ) ) );
+    }
 }

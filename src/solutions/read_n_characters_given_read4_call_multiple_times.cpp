@@ -74,10 +74,11 @@ public:
 
         return read_chars;
     }
+
 private:
     size_t last_chunk_size;
     size_t last_chunk_offset;
-    char last_chunk_buf[4];
+    char last_chunk_buf[ 4 ];
 };
 }  // namespace
 
@@ -85,13 +86,13 @@ TEST( ReadNCharactersGivenRead4CallMultipleTimes, generic )
 {
     char buf[ 1024 ];
 
-    auto sln = make_unique< Solution >( );
+    unique_ptr< Solution > sln( new Solution );
     set_buf( "abc" );
     EXPECT_EQ( "a", string( buf, sln->read( buf, 1 ) ) );
     EXPECT_EQ( "bc", string( buf, sln->read( buf, 2 ) ) );
     EXPECT_EQ( "", string( buf, sln->read( buf, 1 ) ) );
 
-    sln = make_unique< Solution >( );
+    sln.reset( new Solution );
     set_buf( "abc" );
     EXPECT_EQ( "abc", string( buf, sln->read( buf, 4 ) ) );
     EXPECT_EQ( "", string( buf, sln->read( buf, 1 ) ) );

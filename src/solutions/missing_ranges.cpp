@@ -11,7 +11,7 @@ class Solution
 {
 public:
     vector< string >
-    findMissingRanges( vector< int >& nums, int lower, int upper )
+    findMissingRanges( const vector< int >& nums, int lower, int upper )
     {
         vector< string > res;
         for ( auto v : nums )

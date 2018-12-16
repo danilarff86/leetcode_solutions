@@ -13,14 +13,14 @@ class Solution
 {
 public:
     TreeNode*
-    sortedArrayToBST( vector< int >& nums )
+    sortedArrayToBST( const vector< int >& nums )
     {
         return array_to_tree( nums, 0, nums.size( ) - 1 );
     }
 
 private:
     TreeNode*
-    array_to_tree( vector< int >& nums, int start, int end )
+    array_to_tree( const vector< int >& nums, int start, int end )
     {
         if ( start > end )
         {
