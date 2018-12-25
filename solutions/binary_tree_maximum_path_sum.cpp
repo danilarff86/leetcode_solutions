@@ -30,20 +30,10 @@ public:
         const auto val = node->val;
         const auto left_sum = calc_max_path_sum( node->left );
         const auto right_sum = calc_max_path_sum( node->right );
+        max_path_sum = max( max_path_sum, val + left_sum + right_sum );
 
-        auto actual_max = val;
-        if ( left_sum > 0 )
-        {
-            actual_max += left_sum;
-        }
-        if ( right_sum > 0 )
-        {
-            actual_max += right_sum;
-        }
-        max_path_sum = max( max_path_sum, actual_max );
-
-        const auto max_branch = max( left_sum, right_sum );
-        return max_branch > 0 ? max_branch + val : val;
+        const auto ret = val + max( left_sum, right_sum );
+        return ret > 0 ? ret : 0;
     }
 
 private:
