@@ -19,14 +19,20 @@ public:
     push( int x )
     {
         m_vals.push( x );
-        m_mins.push( m_mins.empty( ) ? x : min( x, m_mins.top( ) ) );
+        if ( m_mins.empty( ) || x <= m_mins.top( ) )
+        {
+            m_mins.push( x );
+        }
     }
 
     void
     pop( )
     {
+        if ( m_vals.top( ) == m_mins.top( ) )
+        {
+            m_mins.pop( );
+        }
         m_vals.pop( );
-        m_mins.pop( );
     }
 
     int
