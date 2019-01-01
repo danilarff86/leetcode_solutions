@@ -18,19 +18,18 @@ public:
         stack< char > working_mem;
         for ( const auto c : s )
         {
-            switch ( c )
+            auto c_it = parentheses_mapping.find( c );
+            if ( c_it != parentheses_mapping.end( ) )
             {
-            case '(':
-            case '[':
-            case '{':
-                working_mem.push( c );
-                break;
-            default:
-                if ( working_mem.empty( ) || parentheses_mapping.at( c ) != working_mem.top( ) )
+                if ( working_mem.empty( ) || c_it->second != working_mem.top( ) )
                 {
                     return false;
                 }
                 working_mem.pop( );
+            }
+            else
+            {
+                working_mem.push( c );
             }
         }
         return working_mem.empty( );
