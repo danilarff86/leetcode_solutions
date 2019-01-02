@@ -13,7 +13,7 @@ public:
     maxSubArray( const vector< int >& nums )
     {
         int max_ending_here = nums[ 0 ], max_so_far = nums[ 0 ];
-        for ( size_t i = 0; i < nums.size( ); ++i )
+        for ( size_t i = 1; i < nums.size( ); ++i )
         {
             max_ending_here = max( max_ending_here + nums[ i ], nums[ i ] );
             max_so_far = max( max_so_far, max_ending_here );
