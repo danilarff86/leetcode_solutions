@@ -18,11 +18,8 @@ public:
             const auto min_mul = min_ending_here * nums[ i ];
             const auto max_mul = max_ending_here * nums[ i ];
 
-            const auto ending_max = max( min_mul, max_mul );
-            const auto ending_min = min( min_mul, max_mul );
-
-            max_ending_here = max( ending_max, nums[ i ] );
-            min_ending_here = min( ending_min, nums[ i ] );
+            max_ending_here = max( max( min_mul, max_mul ), nums[ i ] );
+            min_ending_here = min( min( min_mul, max_mul ), nums[ i ] );
 
             max_so_far = max( max_so_far, max_ending_here );
         }
