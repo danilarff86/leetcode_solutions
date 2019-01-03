@@ -15,7 +15,7 @@ public:
         while ( i < j && nums[ i ] > nums[ j ] )
         {
             const int m = ( i + j ) / 2;
-            if ( nums[ i ] < nums[ m ] )
+            if ( nums[ m ] > nums[ j ] )
             {
                 i = m + 1;
             }
