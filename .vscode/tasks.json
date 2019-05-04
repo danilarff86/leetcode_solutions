@@ -23,7 +23,7 @@
             }
         },
         {
-            "label": "Ninja build",
+            "label": "Ninja: build solutions",
             "type": "process",
             "command": "ninja",
             "options":{
@@ -38,7 +38,7 @@
             }
         },
         {
-            "label": "Ninja clean",
+            "label": "Ninja: clean",
             "type": "process",
             "command": "ninja",
             "options":{
@@ -53,12 +53,27 @@
             }
         },
         {
-            "label": "Run solutions",
+            "label": "Run: all",
             "type": "process",
             "command": "./solutions",
             "options":{
                 "cwd": "${workspaceRoot}/build_vscode/solutions"
             },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run: with filter",
+            "type": "process",
+            "command": "./solutions",
+            "options":{
+                "cwd": "${workspaceRoot}/build_vscode/solutions"
+            },
+            "args": [
+                "--gtest_filter=TrappingRainWater*"
+            ],
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
