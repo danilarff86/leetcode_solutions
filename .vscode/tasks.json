@@ -8,12 +8,13 @@
             "type": "process",
             "command": "cmake",
             "options":{
-                "cwd": "${workspaceRoot}/build"
+                "cwd": "${workspaceRoot}/build_vscode"
             },
             "args": [
                 "-G",
-                "Unix Makefiles",
+                "Ninja",
                 "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
                 "../"
             ],
             "presentation": {
@@ -22,19 +23,29 @@
             }
         },
         {
-            "label": "CMake build",
+            "label": "Ninja build",
             "type": "process",
-            "command": "cmake",
+            "command": "ninja",
             "options":{
-                "cwd": "${workspaceRoot}/build"
+                "cwd": "${workspaceRoot}/build_vscode"
             },
             "args": [
-                "--build",
-                ".",
-                "--target",
-                "solutions",
-                "--",
-                "-j4"
+                "solutions"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Ninja clean",
+            "type": "process",
+            "command": "ninja",
+            "options":{
+                "cwd": "${workspaceRoot}/build_vscode"
+            },
+            "args": [
+                "clean"
             ],
             "presentation": {
                 "reveal": "always",
@@ -46,7 +57,7 @@
             "type": "process",
             "command": "./solutions",
             "options":{
-                "cwd": "${workspaceRoot}/build/solutions"
+                "cwd": "${workspaceRoot}/build_vscode/solutions"
             },
             "presentation": {
                 "reveal": "always",
