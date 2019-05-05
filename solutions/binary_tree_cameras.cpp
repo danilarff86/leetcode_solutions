@@ -2,14 +2,14 @@
 #include "gtest/gtest.h"
 
 #include <algorithm>
-#include <climits>
+#include <unordered_set>
 
 using namespace std;
 using namespace binary_tree;
 
 namespace
 {
-class Solution
+class Solution_dp
 {
 public:
     struct Counters
@@ -55,6 +55,46 @@ private:
         return counters;
     }
 };
+
+class Solution
+{
+public:
+    int
+    minCameraCover( TreeNode* root )
+    {
+        cameras = 0;
+        covered.clear( );
+        covered.insert( nullptr );
+        dfs( root, nullptr );
+        return cameras;
+    }
+
+private:
+    void
+    dfs( TreeNode* node, TreeNode* parent )
+    {
+        if ( node != nullptr )
+        {
+            dfs( node->left, node );
+            dfs( node->right, node );
+
+            if ( ( parent == nullptr && covered.count( node ) == 0 )
+                 || covered.count( node->left ) == 0 || covered.count( node->right ) == 0 )
+            {
+                ++cameras;
+                covered.insert( node );
+                covered.insert( parent );
+                covered.insert( node->left );
+                covered.insert( node->right );
+            }
+        }
+    }
+
+private:
+    unordered_set< const TreeNode* > covered;
+    int cameras;
+};
+
 }  // namespace
 
 TEST( BinaryTreeCameras, generic )
@@ -64,4 +104,5 @@ TEST( BinaryTreeCameras, generic )
     EXPECT_EQ( 2, sn.minCameraCover( bt_from_str( "[0,0,null,0,null,0,null,null,0]" ) ) );
     EXPECT_EQ( 1, sn.minCameraCover( bt_from_str( "[0]" ) ) );
     EXPECT_EQ( 1, sn.minCameraCover( bt_from_str( "[0,0,0]" ) ) );
+    EXPECT_EQ( 2, sn.minCameraCover( bt_from_str( "[0,null,0,null,0,null,0]" ) ) );
 }
