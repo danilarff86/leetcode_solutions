@@ -72,7 +72,7 @@
                 "cwd": "${workspaceRoot}/build_vscode/solutions"
             },
             "args": [
-                "--gtest_filter=TrappingRainWater*"
+                "--gtest_filter=BinaryTreeCameras*"
             ],
             "presentation": {
                 "reveal": "always",
