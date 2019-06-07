@@ -13,7 +13,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/build_vscode/solutions",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
