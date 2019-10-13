@@ -44,5 +44,5 @@ private:
 TEST( LinkedListRandomNode, generic )
 {
     Solution sn( list_from_vector( {1, 2, 3} ) );
-    EXPECT_LE( 3, sn.getRandom( ) );
+    EXPECT_LE( sn.getRandom( ), 3 );
 }
