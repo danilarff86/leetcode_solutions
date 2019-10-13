@@ -24,9 +24,8 @@ pipeline {
                 environment name: 'RUN_TESTS', value: 'true'
             }
             steps {
-                ctest 'InSearchPath'
-                sh label: '', returnStatus: true, script: 'cd InSearchPath && solutions/solutions --gtest_output="xml:testresults.xml"'
-                publishxUnit pattern: '**/testresults.xml'
+                sh label: '', returnStatus: true, script: './solutions/solutions --gtest_output="xml:testresults.xml"'
+                junit '*testresults.xml'
             }
         }
 
