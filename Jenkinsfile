@@ -44,7 +44,7 @@ pipeline {
                 environment name: 'DEPLOY', value: 'true'
             }
             steps {
-                sh label: '', returnStatus: true, script: '''cp solutions/solutions ~'''
+                archiveArtifacts artifacts: 'solutions/solutions', fingerprint: true
             }
         }
 	}
