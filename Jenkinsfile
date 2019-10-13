@@ -25,6 +25,8 @@ pipeline {
             }
             steps {
                 ctest 'InSearchPath'
+                sh label: '', returnStatus: true, script: 'cd InSearchPath && solutions/solutions --gtest_output="xml:testresults.xml"'
+                publishxUnit pattern: '**/testresults.xml'
             }
         }
 
