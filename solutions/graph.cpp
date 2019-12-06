@@ -1,6 +1,7 @@
 #include "graph.h"
 #include "gtest/gtest.h"
 
+#include <algorithm>
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
