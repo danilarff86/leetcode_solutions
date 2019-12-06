@@ -1,6 +1,6 @@
-#include "binary_tree.h"
+#include "binary-tree.h"
 #include "gtest/gtest.h"
-#include "linked_list.h"
+#include "linked-list.h"
 
 using namespace std;
 using namespace binary_tree;

@@ -1,6 +1,6 @@
 #include <queue>
 #include "gtest/gtest.h"
-#include "linked_list.h"
+#include "linked-list.h"
 
 using namespace std;
 using namespace linked_list;

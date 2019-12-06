@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "linked_list.h"
+#include "linked-list.h"
 
 #include <unordered_map>
 

@@ -1,4 +1,4 @@
-#include "binary_tree.h"
+#include "binary-tree.h"
 #include "gtest/gtest.h"
 
 using namespace std;
