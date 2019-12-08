@@ -1,8 +1,8 @@
 #include "graph.h"
-#include "gtest/gtest.h"
 
 #include <algorithm>
 #include <queue>
+#include <sstream>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -121,18 +121,6 @@ graph_to_str( const UndirectedGraphNode* root )
     }
 
     return "{" + output.substr( 1 ) + "}";
-}
-
-TEST( Graph, generic )
-{
-    {
-        auto data = "{0,1,2#1,2#2,2}";
-        EXPECT_EQ( data, graph_to_str( graph_from_str( data ) ) );
-    }
-    {
-        auto data = "{}";
-        EXPECT_EQ( data, graph_to_str( graph_from_str( data ) ) );
-    }
 }
 
 }  // namespace graph

@@ -12,7 +12,7 @@ public:
     int
     singleNumber( const vector< int >& nums )
     {
-        int bit_count[ 32 ]{};
+        unsigned int bit_count[ 32 ]{};
         int result = 0;
         for ( size_t i_bit = 0; i_bit < 32; ++i_bit )
         {

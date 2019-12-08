@@ -1,8 +1,8 @@
 #include "binary-tree.h"
-#include "gtest/gtest.h"
 
 #include <algorithm>
 #include <queue>
+#include <sstream>
 #include <vector>
 
 namespace binary_tree
@@ -51,26 +51,26 @@ bt_to_str( const TreeNode* root )
         q.push( node->right );
     }
 
-    auto compare_with_null = [&](int i) {
-        if (i < 0)
+    auto compare_with_null = [&]( int i ) {
+        if ( i < 0 )
         {
             return false;
         }
         int j = 0;
-        while (j < null_node_len && output[i++] == null_node[j])
+        while ( j < null_node_len && output[ i++ ] == null_node[ j ] )
         {
             ++j;
         }
         return j == null_node_len;
     };
 
-    auto output_end = output.length();
-    while (compare_with_null(output_end - 6))
+    auto output_end = output.length( );
+    while ( compare_with_null( output_end - 6 ) )
     {
         output_end -= 6;
     }
 
-    return "[" + output.substr(0, output_end - 2) + "]";
+    return "[" + output.substr( 0, output_end - 2 ) + "]";
 }
 
 TreeNode*
@@ -122,14 +122,6 @@ bt_from_str( const std::string& str )
     }
 
     return root;
-}
-
-TEST( BinaryTree, generic )
-{
-    {
-        auto data = "[5, 1, 4, null, null, 3, 6]";
-        EXPECT_EQ( data, bt_to_str( bt_from_str( data ) ) );
-    }
 }
 
 }  // namespace binary_tree
