@@ -12,22 +12,21 @@ public:
     TreeNode*
     insertIntoBST( TreeNode* root, int val )
     {
-        recursive( root, val );
+        auto node = root;
+        while ( node )
+        {
+            auto& dst = val < node->val ? node->left : node->right;
+            if ( dst )
+            {
+                node = dst;
+            }
+            else
+            {
+                dst = new TreeNode( val );
+                return root;
+            }
+        }
         return root;
-    }
-
-    void
-    recursive( TreeNode* root, int val )
-    {
-        auto& dst = val < root->val ? root->left : root->right;
-        if ( dst )
-        {
-            recursive( dst, val );
-        }
-        else
-        {
-            dst = new TreeNode( val );
-        }
     }
 };
 
