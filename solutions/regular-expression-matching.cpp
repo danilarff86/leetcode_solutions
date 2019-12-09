@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
-
 #include <algorithm>
 #include <string>
+
+#include "gtest/gtest.h"
 
 using namespace std;
 
@@ -36,7 +36,7 @@ public:
                 const auto first_match = p[ j ] == s[ i ] || p[ j ] == '.';
                 if ( j + 1 < p.length( ) && p[ j + 1 ] == '*' )
                 {
-                    dp[ i ][ j ] = dp[ i ][ j + 2 ] || first_match && dp[ i + 1 ][ j ];
+                    dp[ i ][ j ] = dp[ i ][ j + 2 ] || ( first_match && dp[ i + 1 ][ j ] );
                 }
                 else
                 {
