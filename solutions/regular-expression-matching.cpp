@@ -1,5 +1,8 @@
 #include "gtest/gtest.h"
 
+#include <algorithm>
+#include <string>
+
 using namespace std;
 
 namespace
@@ -10,49 +13,39 @@ public:
     bool
     isMatch( string s, string p )
     {
-        s_end = s.data( ) + s.length( );
-        p_end = p.data( ) + p.length( );
-        dp = vector< vector< int > >( s.length( ) + 1, vector< int >( p.length( ) + 1, -1 ) );
-        return is_match( s.data( ), p.data( ) );
-    }
+        vector< vector< int > > dp
+            = vector< vector< int > >( s.size( ) + 1, vector< int >( p.size( ) + 1 ) );
+        dp[ s.length( ) ][ p.length( ) ] = true;
 
-private:
-    bool
-    is_match( const char* s, const char* p )
-    {
-        const auto s_len = s_end - s;
-        const auto p_len = p_end - p;
-        if ( dp[ s_len ][ p_len ] != -1 )
+        for ( int j = p.length( ) - 2; j >= 0; j-- )
         {
-            return dp[ s_len ][ p_len ];
-        }
-
-        bool answer = false;
-        if ( p_len == 0 )
-        {
-            answer = s_len == 0;
-        }
-        else
-        {
-            const auto first_match = ( s_len > 0 && ( p[ 0 ] == s[ 0 ] || p[ 0 ] == '.' ) );
-            if ( p_len >= 2 && p[ 1 ] == '*' )
+            if ( p[ j + 1 ] == '*' )
             {
-                answer = is_match( s, p + 2 ) || ( first_match && is_match( s + 1, p ) );
+                dp[ s.length( ) ][ j ] = dp[ s.length( ) ][ j + 2 ];
             }
             else
             {
-                answer = first_match && is_match( s + 1, p + 1 );
+                dp[ s.length( ) ][ j ] = false;
             }
         }
 
-        dp[ s_len ][ p_len ] = answer;
-        return answer;
+        for ( int i = s.length( ) - 1; i >= 0; i-- )
+        {
+            for ( int j = p.length( ) - 1; j >= 0; j-- )
+            {
+                const auto first_match = p[ j ] == s[ i ] || p[ j ] == '.';
+                if ( j + 1 < p.length( ) && p[ j + 1 ] == '*' )
+                {
+                    dp[ i ][ j ] = dp[ i ][ j + 2 ] || first_match && dp[ i + 1 ][ j ];
+                }
+                else
+                {
+                    dp[ i ][ j ] = first_match && dp[ i + 1 ][ j + 1 ];
+                }
+            }
+        }
+        return dp[ 0 ][ 0 ];
     }
-
-private:
-    const char* s_end;
-    const char* p_end;
-    vector< vector< int > > dp;
 };
 }  // namespace
 
