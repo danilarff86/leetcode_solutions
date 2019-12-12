@@ -1,12 +1,15 @@
-#include "gtest/gtest.h"
-
 #include <queue>
+#include <set>
 #include <unordered_map>
 #include <vector>
+
+#include "gtest/gtest.h"
 
 using namespace std;
 
 namespace
+{
+namespace python
 {
 class Solution
 {
@@ -48,10 +51,52 @@ public:
         return super_ugly_numbers.back( );
     }
 };
+}  // namespace python
+
+namespace mine
+{
+class Solution
+{
+public:
+    int
+    nthSuperUglyNumber( int n, const vector< int >& primes )
+    {
+        vector< int > super_ugly_numbers;
+        priority_queue< uint64_t, vector< uint64_t >, greater< uint64_t > > heap;
+        set< uint64_t > traversed;
+        heap.push( 1 );
+
+        while ( super_ugly_numbers.size( ) < n )
+        {
+            const auto num = heap.top( );
+            super_ugly_numbers.push_back( num );
+            heap.pop( );
+
+            for ( const auto p : primes )
+            {
+                const auto new_prime = p * num;
+                if ( traversed.find( new_prime ) == traversed.end( ) )
+                {
+                    heap.push( new_prime );
+                    traversed.insert( new_prime );
+                }
+            }
+        }
+
+        return super_ugly_numbers.back( );
+    }
+};
+}  // namespace mine
 }  // namespace
 
 TEST( SuperUglyNumber, generic )
 {
-    Solution sn;
-    EXPECT_EQ( 32, sn.nthSuperUglyNumber( 12, {2, 7, 13, 19} ) );
+    {
+        python::Solution sn;
+        EXPECT_EQ( 32, sn.nthSuperUglyNumber( 12, {2, 7, 13, 19} ) );
+    }
+    {
+        mine::Solution sn;
+        EXPECT_EQ( 32, sn.nthSuperUglyNumber( 12, {2, 7, 13, 19} ) );
+    }
 }
