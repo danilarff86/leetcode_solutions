@@ -25,6 +25,9 @@ calculate_hash( const string& str )
 template < typename Key, typename Val, size_t num_blocks = 1 << 8 >
 struct MyHashTable
 {
+    static_assert( num_blocks && ( ( num_blocks & ( num_blocks - 1 ) ) == 0 ),
+                   "num_blocks must be power of two" );
+
     using DataType = pair< const Key, Val >;
 
     MyHashTable( )
@@ -35,7 +38,7 @@ struct MyHashTable
     bool
     insert( const DataType& data )
     {
-        auto const hash_val = calculate_hash( data.first ) % num_blocks;
+        auto const hash_val = calculate_hash( data.first ) & ( num_blocks - 1 );
         auto& block = data_[ hash_val ];
         return block.insert( data ).second;
     }
@@ -43,7 +46,7 @@ struct MyHashTable
     Val*
     find( const Key& key )
     {
-        auto const hash_val = calculate_hash( key ) % num_blocks;
+        auto const hash_val = calculate_hash( key ) & ( num_blocks - 1 );
         auto& block = data_[ hash_val ];
         auto find_result = block.find( key );
         return find_result != block.end( ) ? &( find_result->second ) : nullptr;
@@ -52,7 +55,7 @@ struct MyHashTable
     bool
     remove( const Key& key )
     {
-        auto const hash_val = calculate_hash( key ) % num_blocks;
+        auto const hash_val = calculate_hash( key ) & ( num_blocks - 1 );
         auto& block = data_[ hash_val ];
         return block.erase( key ) > 0;
     }
@@ -64,7 +67,7 @@ private:
 
 TEST( HashTable, generic )
 {
-    MyHashTable< string, string > ht;
+    MyHashTable< string, string, 1 << 8 > ht;
     EXPECT_TRUE( ht.insert( {"My", "Mother"} ) );
     EXPECT_FALSE( ht.insert( {"My", "Mother"} ) );
     EXPECT_TRUE( ht.insert( {"Her", "Father"} ) );
