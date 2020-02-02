@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <queue>
 #include <vector>
 
@@ -15,12 +16,12 @@ public:
     {
         const auto sz = points.size( );
         vector< int > squared_euclidean_distances( sz );
-        for ( size_t i = 0; i < sz; ++i )
-        {
-            const auto q1 = points[ i ][ 0 ];
-            const auto q2 = points[ i ][ 1 ];
-            squared_euclidean_distances[ i ] = q1 * q1 + q2 * q2;
-        }
+        std::transform( points.begin( ), points.end( ), squared_euclidean_distances.begin( ),
+                        []( const vector< int >& v ) {
+                            const auto q1 = v[ 0 ];
+                            const auto q2 = v[ 1 ];
+                            return q1 * q1 + q2 * q2;
+                        } );
 
         auto comp = [&squared_euclidean_distances]( size_t lhs_index, size_t rhs_index ) {
             return squared_euclidean_distances[ lhs_index ]
