@@ -13,7 +13,7 @@ class Solution
 {
 private:
     static const size_t NUM_DIGITS = 10;
-    static const size_t NUM_SYMBOL_VALS = 'Z' - 'A' + 1;
+    static const size_t NUM_SYMBOL_VALS = 0xFF;
     static const size_t UNMAPPED_SYMBOL_VAL = 0xFF;
     static const size_t MAPPED_SYMBOL_VAL = NUM_DIGITS;
 
@@ -22,14 +22,6 @@ private:
     {
         T data[ SZ ];
         size_t size;
-        // T& operator[]( size_t i )
-        // {
-        //     if ( i >= SZ )
-        //     {
-        //         cerr << "INVALID INDEX " << i << endl;
-        //     }
-        //     return data[ i ];
-        // }
     };
 
 public:
@@ -68,18 +60,6 @@ private:
     {
         if ( right_index > last_index )
         {
-#if 0
-            for ( size_t i = 0; i < NUM_SYMBOL_VALS; i++ )
-            {
-                if ( char_mapping_[ i ] != UNMAPPED_SYMBOL_VAL )
-                {
-                    cout << char( i + 'A' ) << "=" << int( char_mapping_[ i ] ) << " ";
-                }
-            }
-
-            cout << endl;
-#endif
-
             return words_carry == 0;
         }
 
@@ -161,10 +141,10 @@ private:
             if ( word.size( ) >= right_index )
             {
                 const auto c = word[ word.size( ) - right_index ];
-                if ( char_mapping_[ c - 'A' ] == UNMAPPED_SYMBOL_VAL )
+                if ( char_mapping_[ c ] == UNMAPPED_SYMBOL_VAL )
                 {
-                    char_mapping_[ c - 'A' ] = MAPPED_SYMBOL_VAL;
-                    unmapped_symbols.data[ unmapped_symbols.size++ ] = c - 'A';
+                    char_mapping_[ c ] = MAPPED_SYMBOL_VAL;
+                    unmapped_symbols.data[ unmapped_symbols.size++ ] = c;
                 }
             }
         }
@@ -172,10 +152,10 @@ private:
         if ( result_->size( ) >= right_index )
         {
             const auto c = ( *result_ )[ result_->size( ) - right_index ];
-            if ( char_mapping_[ c - 'A' ] == UNMAPPED_SYMBOL_VAL )
+            if ( char_mapping_[ c ] == UNMAPPED_SYMBOL_VAL )
             {
-                char_mapping_[ c - 'A' ] = MAPPED_SYMBOL_VAL;
-                unmapped_symbols.data[ unmapped_symbols.size++ ] = c - 'A';
+                char_mapping_[ c ] = MAPPED_SYMBOL_VAL;
+                unmapped_symbols.data[ unmapped_symbols.size++ ] = c;
             }
         }
     }
@@ -235,7 +215,7 @@ private:
             if ( word.size( ) >= right_index )
             {
                 const auto c = word[ word.size( ) - right_index ];
-                const auto char_val = char_mapping_[ c - 'A' ];
+                const auto char_val = char_mapping_[ c ];
                 if ( word.size( ) == right_index && char_val == 0 )
                 {
                     return false;
@@ -249,8 +229,7 @@ private:
             return false;
         }
 
-        const auto result_val
-            = char_mapping_[ ( *result_ )[ result_->size( ) - right_index ] - 'A' ];
+        const auto result_val = char_mapping_[ ( *result_ )[ result_->size( ) - right_index ] ];
 
         if ( result_->size( ) == right_index && result_val == 0 )
         {
