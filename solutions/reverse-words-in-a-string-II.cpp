@@ -46,7 +46,7 @@ public:
                 ++cit;
             }
             std::reverse( word_begin, cit );
-            if ( isspace( *cit ) )
+            if ( cit != str.end( ) && isspace( *cit ) )
             {
                 ++cit;
             }
