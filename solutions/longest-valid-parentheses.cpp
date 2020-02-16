@@ -1,10 +1,12 @@
+#include <algorithm>
+#include <stack>
 #include <string>
 #include <vector>
 #include "gtest/gtest.h"
 
 using namespace std;
 
-namespace
+namespace dp_approach
 {
 class Solution
 {
@@ -55,16 +57,69 @@ public:
         return res;
     }
 };
-}  // namespace
+}  // namespace dp_approach
+
+namespace stack_approach
+{
+class Solution
+{
+public:
+    int
+    longestValidParentheses( string s )
+    {
+        int res = 0;
+        stack< int > stk;
+
+        stk.push( -1 );
+
+        for ( size_t i = 0; i < s.size( ); i++ )
+        {
+            if ( s[ i ] == '(' )
+            {
+                stk.push( i );
+            }
+            else
+            {
+                stk.pop( );
+                if ( stk.empty( ) )
+                {
+                    stk.push( i );
+                }
+                else
+                {
+                    const auto len = i - stk.top( );
+                    if ( len > res )
+                    {
+                        res = len;
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+};
+}  // namespace stack_approach
 
 TEST( LongestValidParentheses, generic )
 {
-    Solution sn;
-    EXPECT_EQ( 2, sn.longestValidParentheses( "(()" ) );
-    EXPECT_EQ( 4, sn.longestValidParentheses( ")()())" ) );
-    EXPECT_EQ( 6, sn.longestValidParentheses( "(()())" ) );
-    EXPECT_EQ( 68, sn.longestValidParentheses(
-                      "(()()(()(()))()((()))((()(()())()(()))())))()(()()))())))))))()()()()))(((()"
-                      "())((()()(((())))()(()()(())((()))))))(()(()))(((()())()))(()))((((()(()()()"
-                      "())()()(()))(()()(())()((()()())))(())()())()(" ) );
+    dp_approach::Solution sn_dp;
+    EXPECT_EQ( 2, sn_dp.longestValidParentheses( "(()" ) );
+    EXPECT_EQ( 4, sn_dp.longestValidParentheses( ")()())" ) );
+    EXPECT_EQ( 6, sn_dp.longestValidParentheses( "(()())" ) );
+    EXPECT_EQ( 68,
+               sn_dp.longestValidParentheses(
+                   "(()()(()(()))()((()))((()(()())()(()))())))()(()()))())))))))()()()()))(((()"
+                   "())((()()(((())))()(()()(())((()))))))(()(()))(((()())()))(()))((((()(()()()"
+                   "())()()(()))(()()(())()((()()())))(())()())()(" ) );
+
+    stack_approach::Solution sn_stack;
+    EXPECT_EQ( 2, sn_stack.longestValidParentheses( "(()" ) );
+    EXPECT_EQ( 4, sn_stack.longestValidParentheses( ")()())" ) );
+    EXPECT_EQ( 6, sn_stack.longestValidParentheses( "(()())" ) );
+    EXPECT_EQ( 68,
+               sn_stack.longestValidParentheses(
+                   "(()()(()(()))()((()))((()(()())()(()))())))()(()()))())))))))()()()()))(((()"
+                   "())((()()(((())))()(()()(())((()))))))(()(()))(((()())()))(()))((((()(()()()"
+                   "())()()(()))(()()(())()((()()())))(())()())()(" ) );
 }
