@@ -7,7 +7,7 @@
             "label": "CMake configure",
             "type": "process",
             "command": "cmake",
-            "options":{
+            "options": {
                 "cwd": "${workspaceRoot}/build_vscode"
             },
             "args": [
@@ -26,7 +26,7 @@
             "label": "CMake configure with sanitizer",
             "type": "process",
             "command": "cmake",
-            "options":{
+            "options": {
                 "cwd": "${workspaceRoot}/build_vscode"
             },
             "args": [
@@ -43,10 +43,30 @@
             }
         },
         {
+            "label": "CMake configure with profiler",
+            "type": "process",
+            "command": "cmake",
+            "options": {
+                "cwd": "${workspaceRoot}/build_vscode"
+            },
+            "args": [
+                "-G",
+                "Ninja",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+                "-DPROFILER=ON",
+                "../"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
             "label": "Ninja: build solutions",
             "type": "process",
             "command": "ninja",
-            "options":{
+            "options": {
                 "cwd": "${workspaceRoot}/build_vscode"
             },
             "args": [
@@ -61,7 +81,7 @@
             "label": "Ninja: clean",
             "type": "process",
             "command": "ninja",
-            "options":{
+            "options": {
                 "cwd": "${workspaceRoot}/build_vscode"
             },
             "args": [
@@ -76,7 +96,7 @@
             "label": "Run: all",
             "type": "process",
             "command": "./solutions",
-            "options":{
+            "options": {
                 "cwd": "${workspaceRoot}/build_vscode/solutions"
             },
             "presentation": {
@@ -88,7 +108,7 @@
             "label": "Run: with filter",
             "type": "process",
             "command": "./solutions",
-            "options":{
+            "options": {
                 "cwd": "${workspaceRoot}/build_vscode/solutions"
             },
             "args": [
