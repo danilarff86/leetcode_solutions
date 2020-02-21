@@ -36,5 +36,5 @@ file(GLOB solutions_SRC
 )
 
 add_executable(solutions ${solutions_SRC})
-target_link_libraries(solutions gtest_main asan)
+target_link_libraries(solutions gtest_main)
 #add_test(NAME generic COMMAND solutions)
