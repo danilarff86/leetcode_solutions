@@ -50,24 +50,74 @@ public:
     }
 };
 }  // namespace rolling_hash
+
+namespace string_compare
+{
+class Solution
+{
+public:
+    int
+    longestDecomposition( const string& text )
+    {
+        int text_size = text.size( );
+        int last_index = text_size / 2;
+
+        int res = 1;
+
+        int offset = 0;
+        for ( int i = 0; i < last_index; i++ )
+        {
+            if ( text.substr( offset, i - offset + 1 )
+                 == text.substr( text_size - 1 - i, i - offset + 1 ) )
+            {
+                offset = i + 1;
+                res += ( offset * 2 ) >= text_size ? 1 : 2;
+            }
+        }
+
+        return res;
+    }
+};
+}  // namespace string_compare
 }  // namespace
 
 TEST( LongestChunkedPalindromeDecomposition, generic )
 {
-    rolling_hash::Solution sn;
-    EXPECT_EQ( 7, sn.longestDecomposition( "ghiabcdefhelloadamhelloabcdefghi" ) );
-    EXPECT_EQ( 1, sn.longestDecomposition( "merchant" ) );
-    EXPECT_EQ( 11, sn.longestDecomposition( "antaprezatepzapreanta" ) );
-    EXPECT_EQ( 3, sn.longestDecomposition( "aaa" ) );
-    EXPECT_EQ( 2, sn.longestDecomposition( "azaz" ) );
-    EXPECT_EQ( 4, sn.longestDecomposition( "rteazazrte" ) );
-    EXPECT_EQ( 5, sn.longestDecomposition( "rteazgazrte" ) );
-    // EXPECT_EQ(
-    //     122,
-    //     sn.longestDecomposition(
-    //         "klzosgznatwxkhgbperdpvqpxtrujpvdxybmkrwwtdkwshjancajxmfehdklgjdrictlnienlbbwcmfebl"
-    //         "epnikxkeibftbcdecssnakbmclgzudluhxzretmqslgtwqclmdrzecptxbmqqdlddullxqlvdajhcszerg"
-    //         "xhiqpdglmkvkjjjppbaxjmihcgaxedqpwlououwlxedqpmihcgaxjpbajjpvkjglmkdhiqpzergxjhcsad"
-    //         "llxqlvldduqqdtxbmdrzecpwqclmgtqsltmhxzreudlubmclgznakcsscdebtkeibfnikxblepfecmenlb"
-    //         "bwirictlnjddklgehjxmfjancadkwshrwwtkdxybmpvtrujdpvqpxergbpwxkhznatglzosk" ) );
+    {
+        rolling_hash::Solution sn;
+        EXPECT_EQ( 7, sn.longestDecomposition( "ghiabcdefhelloadamhelloabcdefghi" ) );
+        EXPECT_EQ( 1, sn.longestDecomposition( "merchant" ) );
+        EXPECT_EQ( 11, sn.longestDecomposition( "antaprezatepzapreanta" ) );
+        EXPECT_EQ( 3, sn.longestDecomposition( "aaa" ) );
+        EXPECT_EQ( 2, sn.longestDecomposition( "azaz" ) );
+        EXPECT_EQ( 4, sn.longestDecomposition( "rteazazrte" ) );
+        EXPECT_EQ( 5, sn.longestDecomposition( "rteazgazrte" ) );
+        // EXPECT_EQ(
+        //     122,
+        //     sn.longestDecomposition(
+        //         "klzosgznatwxkhgbperdpvqpxtrujpvdxybmkrwwtdkwshjancajxmfehdklgjdrictlnienlbbwcmfebl"
+        //         "epnikxkeibftbcdecssnakbmclgzudluhxzretmqslgtwqclmdrzecptxbmqqdlddullxqlvdajhcszerg"
+        //         "xhiqpdglmkvkjjjppbaxjmihcgaxedqpwlououwlxedqpmihcgaxjpbajjpvkjglmkdhiqpzergxjhcsad"
+        //         "llxqlvldduqqdtxbmdrzecpwqclmgtqsltmhxzreudlubmclgznakcsscdebtkeibfnikxblepfecmenlb"
+        //         "bwirictlnjddklgehjxmfjancadkwshrwwtkdxybmpvtrujdpvqpxergbpwxkhznatglzosk" ) );
+    }
+
+    {
+        string_compare::Solution sn;
+        EXPECT_EQ( 7, sn.longestDecomposition( "ghiabcdefhelloadamhelloabcdefghi" ) );
+        EXPECT_EQ( 1, sn.longestDecomposition( "merchant" ) );
+        EXPECT_EQ( 11, sn.longestDecomposition( "antaprezatepzapreanta" ) );
+        EXPECT_EQ( 3, sn.longestDecomposition( "aaa" ) );
+        EXPECT_EQ( 2, sn.longestDecomposition( "azaz" ) );
+        EXPECT_EQ( 4, sn.longestDecomposition( "rteazazrte" ) );
+        EXPECT_EQ( 5, sn.longestDecomposition( "rteazgazrte" ) );
+        // EXPECT_EQ(
+        //     122,
+        //     sn.longestDecomposition(
+        //         "klzosgznatwxkhgbperdpvqpxtrujpvdxybmkrwwtdkwshjancajxmfehdklgjdrictlnienlbbwcmfebl"
+        //         "epnikxkeibftbcdecssnakbmclgzudluhxzretmqslgtwqclmdrzecptxbmqqdlddullxqlvdajhcszerg"
+        //         "xhiqpdglmkvkjjjppbaxjmihcgaxedqpwlououwlxedqpmihcgaxjpbajjpvkjglmkdhiqpzergxjhcsad"
+        //         "llxqlvldduqqdtxbmdrzecpwqclmgtqsltmhxzreudlubmclgznakcsscdebtkeibfnikxblepfecmenlb"
+        //         "bwirictlnjddklgehjxmfjancadkwshrwwtkdxybmpvtrujdpvqpxergbpwxkhznatglzosk" ) );
+    }
 }
