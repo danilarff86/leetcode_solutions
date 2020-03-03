@@ -15,38 +15,39 @@ public:
     {
         const auto ROWS = matrix.size( );
         const auto COLS = matrix.empty( ) ? 0u : matrix[ 0 ].size( );
-        vector< vector< int > > dp( ROWS, vector< int >( COLS ) );
+        vector< int > dp( COLS );
         for ( size_t j = 0; j < COLS; j++ )
         {
-            dp[ 0 ][ j ] = matrix[ 0 ][ j ] - '0';
+            dp[ j ] = matrix[ 0 ][ j ] - '0';
         }
+
+        auto res = largestRectangleArea( dp );
+
         for ( size_t i = 1; i < ROWS; i++ )
         {
             for ( size_t j = 0; j < COLS; j++ )
             {
-                int val = matrix[ i ][ j ] - '0';
-                if ( val == 1 )
+                if ( matrix[ i ][ j ] == '1' )
                 {
-                    val += dp[ i - 1 ][ j ];
+                    ++dp[ j ];
                 }
-                dp[ i ][ j ] = val;
+                else
+                {
+                    dp[ j ] = 0;
+                }
             }
-        }
-
-        int res = 0;
-        for ( const auto& dp_row : dp )
-        {
-            const auto local_res = largestRectangleArea( dp_row );
+            const auto local_res = largestRectangleArea( dp );
             if ( local_res > res )
             {
                 res = local_res;
             }
         }
+
         return res;
     }
 
 private:
-    int
+    static inline int
     largestRectangleArea( const vector< int >& heights )
     {
         stack< int > s;
