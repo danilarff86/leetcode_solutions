@@ -22,33 +22,29 @@ public:
             nums_with_padding[ i + 1 ] = nums[ i ];
         }
 
-        vector< vector< int > > dp( SZ, vector< int >( SZ ) );
+        vector< vector< int > > dp( SZ + 1, vector< int >( SZ + 1 ) );
         for ( size_t len = 1; len <= SZ; ++len )
         {
             for ( size_t i = 0; i <= SZ - len; ++i )
             {
                 const size_t j = i + len - 1;
+                const auto left_right_points = nums_with_padding[ i ] * nums_with_padding[ j + 2 ];
+                auto& target = dp[ i ][ j + 1 ];
                 for ( size_t k = i; k <= j; ++k )
                 {
-                    auto val = nums_with_padding[ i ] * nums_with_padding[ k + 1 ]
-                               * nums_with_padding[ j + 2 ];
-                    if ( k > i )
+                    const auto dp_left = dp[ i ][ k ];
+                    const auto dp_right = dp[ k + 1 ][ j + 1 ];
+                    const auto burst_points = left_right_points * nums_with_padding[ k + 1 ];
+                    auto case_val = dp_left + burst_points + dp_right;
+                    if ( case_val > target )
                     {
-                        val += dp[ i ][ k - 1 ];
-                    }
-                    if ( k < j )
-                    {
-                        val += dp[ k + 1 ][ j ];
-                    }
-                    if ( val > dp[ i ][ j ] )
-                    {
-                        dp[ i ][ j ] = val;
+                        target = case_val;
                     }
                 }
             }
         }
 
-        return SZ > 0 ? dp[ 0 ][ SZ - 1 ] : 0;
+        return dp[ 0 ][ SZ ];
     }
 };
 }  // namespace
