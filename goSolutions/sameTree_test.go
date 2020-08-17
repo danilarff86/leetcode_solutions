@@ -6,12 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 func isSameTree(p *TreeNode, q *TreeNode) bool {
 	if p == nil {
 		if q != nil {
