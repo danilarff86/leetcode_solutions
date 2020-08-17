@@ -29,7 +29,7 @@
             "request": "launch",
             // "mode": "auto",
             "mode": "test",
-            "program": "${workspaceRoot}/goSolutions/mergeSortedArray_test.go",
+            "program": "${workspaceRoot}/goSolutions/sqrt_test.go",
             "env": {},
             "args": []
         }
