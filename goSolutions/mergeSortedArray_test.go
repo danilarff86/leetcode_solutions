@@ -3,7 +3,7 @@ package goSolutions
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
 )
 
 func merge(nums1 []int, m int, nums2 []int, n int) {
@@ -36,26 +36,26 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 	}
 }
 
-func TestMergeSortedArrayBasic(t *testing.T) {
-	nums1 := []int{1, 2, 3, 0, 0, 0}
-	nums2 := []int{2, 5, 6}
-	merge(nums1, len(nums1)-len(nums2), nums2, len(nums2))
+func TestMergeSortedArray(t *testing.T) {
+	{
+		nums1 := []int{1, 2, 3, 0, 0, 0}
+		nums2 := []int{2, 5, 6}
+		merge(nums1, len(nums1)-len(nums2), nums2, len(nums2))
 
-	require.Equal(t, []int{1, 2, 2, 3, 5, 6}, nums1)
-}
+		assert.Equal(t, []int{1, 2, 2, 3, 5, 6}, nums1)
+	}
+	{
+		nums1 := []int{1}
+		nums2 := []int{}
+		merge(nums1, len(nums1)-len(nums2), nums2, len(nums2))
 
-func TestMergeSortedArraySecondArrayIsEmpty(t *testing.T) {
-	nums1 := []int{1}
-	nums2 := []int{}
-	merge(nums1, len(nums1)-len(nums2), nums2, len(nums2))
+		assert.Equal(t, []int{1}, nums1)
+	}
+	{
+		nums1 := []int{4, 0, 0, 0, 0, 0}
+		nums2 := []int{1, 2, 3, 5, 6}
+		merge(nums1, len(nums1)-len(nums2), nums2, len(nums2))
 
-	require.Equal(t, []int{1}, nums1)
-}
-
-func TestMergeSortedArrayCase12(t *testing.T) {
-	nums1 := []int{4, 0, 0, 0, 0, 0}
-	nums2 := []int{1, 2, 3, 5, 6}
-	merge(nums1, len(nums1)-len(nums2), nums2, len(nums2))
-
-	require.Equal(t, []int{1, 2, 3, 4, 5, 6}, nums1)
+		assert.Equal(t, []int{1, 2, 3, 4, 5, 6}, nums1)
+	}
 }

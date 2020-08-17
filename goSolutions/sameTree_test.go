@@ -3,7 +3,7 @@ package goSolutions
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
 )
 
 type TreeNode struct {
@@ -46,48 +46,48 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
 	return len(pQueue) == len(qQueue)
 }
 
-func TestSameTreeBasic1(t *testing.T) {
-	node := &TreeNode{
-		Val: 1,
-		Left: &TreeNode{
-			Val: 2,
-		},
-		Right: &TreeNode{
-			Val: 3,
-		},
-	}
-
-	require.True(t, isSameTree(node, node))
-}
-
-func TestSameTreeCase4(t *testing.T) {
-	p := &TreeNode{
-		Val: 1,
-		Left: &TreeNode{
-			Val: 2,
-		},
-		Right: &TreeNode{
+func TestSameTree(t *testing.T) {
+	{
+		node := &TreeNode{
 			Val: 1,
-		},
+			Left: &TreeNode{
+				Val: 2,
+			},
+			Right: &TreeNode{
+				Val: 3,
+			},
+		}
+
+		assert.True(t, isSameTree(node, node))
 	}
-	q := &TreeNode{
-		Val: 1,
-		Left: &TreeNode{
+	{
+		p := &TreeNode{
 			Val: 1,
-		},
-		Right: &TreeNode{
-			Val: 2,
-		},
+			Left: &TreeNode{
+				Val: 2,
+			},
+			Right: &TreeNode{
+				Val: 1,
+			},
+		}
+		q := &TreeNode{
+			Val: 1,
+			Left: &TreeNode{
+				Val: 1,
+			},
+			Right: &TreeNode{
+				Val: 2,
+			},
+		}
+
+		assert.False(t, isSameTree(p, q))
 	}
+	{
+		p := &TreeNode{
+			Val: 1,
+		}
+		var q *TreeNode = nil
 
-	require.False(t, isSameTree(p, q))
-}
-
-func TestSameTreeCase5(t *testing.T) {
-	p := &TreeNode{
-		Val: 1,
+		assert.False(t, isSameTree(p, q))
 	}
-	var q *TreeNode = nil
-
-	require.False(t, isSameTree(p, q))
 }
