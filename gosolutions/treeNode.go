@@ -1,4 +1,4 @@
-package goSolutions
+package gosolutions
 
 type TreeNode struct {
 	Val   int

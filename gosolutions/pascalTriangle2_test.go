@@ -1,4 +1,4 @@
-package goSolutions
+package gosolutions
 
 import (
 	"testing"
