@@ -1,5 +1,6 @@
 package gosolutions
 
+// ListNode is definition of node in linked list
 type ListNode struct {
 	Val  int
 	Next *ListNode
