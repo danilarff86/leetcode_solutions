@@ -9,7 +9,8 @@ COPY ./gosolutions ./gosolutions
 
 # copy c++ tests
 COPY ./CMakeLists.txt ./CMakeLists.txt
-COPY ./solutions ./solutions
+COPY ./CMakeLists.txt.in ./CMakeLists.txt.in
+COPY ./cppsolutions ./cppsolutions
 
 RUN apk update
 RUN apk add gcc g++ cmake ninja git
@@ -19,6 +20,6 @@ RUN go test -v -c -o gotests ./gosolutions/...
 
 # compile c++ tests
 RUN cmake -GNinja .
-RUN ninja solutions
+RUN ninja cpptests
 
-CMD ./solutions/solutions && ./gotests -test.v
+CMD ./cpptests && ./gotests -test.v
