@@ -1,15 +1,24 @@
-FROM gcc:10.2
+FROM golang:1.16-alpine
 
 WORKDIR /leetcode
 
+# copy golang tests
+COPY ./go.mod ./go.mod
+COPY ./go.sum ./go.sum
+COPY ./gosolutions ./gosolutions
+
+# copy c++ tests
 COPY ./CMakeLists.txt ./CMakeLists.txt
 COPY ./solutions ./solutions
 
-RUN apt update
-RUN apt install -y cmake ninja-build
+RUN apk update
+RUN apk add gcc g++ cmake ninja git
 
-RUN mkdir build
-RUN cd build && cmake -GNinja ../
-RUN cd build && ninja solutions
+# compile golang tests
+RUN go test -v -c -o gotests ./gosolutions/...
 
-CMD [ "./build/solutions/solutions" ]
+# compile c++ tests
+RUN cmake -GNinja .
+RUN ninja solutions
+
+CMD ./solutions/solutions && ./gotests -test.v

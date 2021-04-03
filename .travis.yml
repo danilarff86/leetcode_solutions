@@ -6,4 +6,5 @@ before-install:
   - docker build -t danilarff86/leetcode_solutions -f Dockerfile .
 
 script:
-  - docker run danilarff86/leetcode_solutions ./build/solutions/solutions
+  - docker run danilarff86/leetcode_solutions ./solutions/solutions
+  - docker run danilarff86/leetcode_solutions ./gotests -test.v
