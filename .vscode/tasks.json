@@ -23,6 +23,26 @@
             }
         },
         {
+            "label": "CMake configure M1",
+            "type": "process",
+            "command": "cmake",
+            "options": {
+                "cwd": "${workspaceRoot}/build_vscode"
+            },
+            "args": [
+                "-G",
+                "Ninja",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+                "-DCMAKE_OSX_ARCHITECTURES='arm64'",
+                "../"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
             "label": "CMake configure with sanitizer",
             "type": "process",
             "command": "cmake",
