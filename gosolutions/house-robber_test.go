@@ -23,7 +23,7 @@ func rob(nums []int) int {
 	return dp[elements+1]
 }
 
-func TestRob(t *testing.T) {
+func TestHouseRobber(t *testing.T) {
 	assert.Equal(t, 4, rob([]int{1, 2, 3, 1}))
 	assert.Equal(t, 12, rob([]int{2, 7, 9, 3, 1}))
 }
