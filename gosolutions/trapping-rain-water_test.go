@@ -7,7 +7,7 @@ import (
 )
 
 type highest struct {
-	left int
+	left  int
 	right int
 }
 
@@ -41,7 +41,7 @@ func trap(height []int) int {
 
 	water := 0
 
-	for i := 1; i < elevationSize - 1; i++ {
+	for i := 1; i < elevationSize-1; i++ {
 		waterInc := h[i].min() - height[i]
 		if waterInc > 0 {
 			water += waterInc
