@@ -7,32 +7,31 @@ import (
 )
 
 func longestPalindrome(s string) string {
-	dp := make([][]bool, len(s))
-	pStart := 0
-	pLen := 0
-	if len(s) > 0 {
-		pLen = 1
+	sLen := len(s)
+	if sLen == 0 {
+		return ""
 	}
-	for i := 0; i < len(s); i++ {
-		dp[i] = make([]bool, len(s))
+	dp := make([][]bool, sLen)
+	pStart := 0
+	pLen := 1
+	for i := 0; i < sLen; i++ {
+		dp[i] = make([]bool, sLen)
 		dp[i][i] = true
 	}
-	for i := 1; i < len(s); i++ {
-		val := (s[i] == s[i-1])
-		dp[i-1][i] = val
-		if val && pLen < 2 {
+	for i := 1; i < sLen; i++ {
+		if s[i] == s[i-1] {
+			dp[i-1][i] = true
 			pLen = 2
 			pStart = i - 1
 		}
 	}
-
-	for sz := 3; sz <= len(s); sz++ {
-		for i := 0; i < len(s)-sz+1; i++ {
-			val := s[i] == s[i+sz-1] && dp[i+1][i+sz-2]
-			dp[i][i+sz-1] = val
-			if val && pLen < sz {
+	for sz := 3; sz <= sLen; sz++ {
+		for first := 0; first < sLen-sz+1; first++ {
+			last := first + sz - 1
+			if s[first] == s[last] && dp[first+1][last-1] {
+				dp[first][last] = true
 				pLen = sz
-				pStart = i
+				pStart = first
 			}
 		}
 	}
@@ -41,7 +40,7 @@ func longestPalindrome(s string) string {
 }
 
 func TestLongestPalindromicSubstring(t *testing.T) {
-	assert.Equal(t, "bab", longestPalindrome("babad"))
+	assert.Contains(t, []string{"bab", "aba"}, longestPalindrome("babad"))
 	assert.Equal(t, "bb", longestPalindrome("cbbd"))
 	assert.Equal(t, "a", longestPalindrome("a"))
 	assert.Equal(t, "a", longestPalindrome("ac"))
