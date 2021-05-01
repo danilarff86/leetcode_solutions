@@ -22,16 +22,6 @@
                     "ignoreFailures": true
                 }
             ]
-        },
-        {
-            "name": "Go Launch",
-            "type": "go",
-            "request": "launch",
-            // "mode": "auto",
-            "mode": "test",
-            "program": "${workspaceRoot}/goSolutions/intersectionOfTwoLinkedLists_test.go",
-            "env": {},
-            "args": []
         }
     ]
 }

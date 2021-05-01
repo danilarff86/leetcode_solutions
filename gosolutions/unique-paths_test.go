@@ -29,3 +29,9 @@ func TestUniquePaths(t *testing.T) {
 	assert.Equal(t, 28, uniquePaths(7, 3))
 	assert.Equal(t, 6, uniquePaths(3, 3))
 }
+
+func BenchmarkUniquePaths(b *testing.B) {
+	for n := 1; n < b.N; n++ {
+		uniquePaths(3, 7)
+	}
+}

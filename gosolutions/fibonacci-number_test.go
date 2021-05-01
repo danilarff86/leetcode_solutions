@@ -30,3 +30,9 @@ func TestFibonacciNumber(t *testing.T) {
 	assert.Equal(t, 2, fib(3))
 	assert.Equal(t, 3, fib(4))
 }
+
+func BenchmarkFib(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		fib(30)
+	}
+}
