@@ -1,6 +1,9 @@
-FROM golang:1.16-alpine
+FROM golang:1.18.3-alpine
 
 WORKDIR /leetcode
+
+RUN apk update
+RUN apk add gcc g++ cmake ninja git
 
 # copy golang tests
 COPY ./go.mod ./go.mod
@@ -11,9 +14,6 @@ COPY ./gosolutions ./gosolutions
 COPY ./CMakeLists.txt ./CMakeLists.txt
 COPY ./CMakeLists.txt.in ./CMakeLists.txt.in
 COPY ./cppsolutions ./cppsolutions
-
-RUN apk update
-RUN apk add gcc g++ cmake ninja git
 
 # compile golang tests
 RUN go test -v -c -o gotests ./gosolutions/...

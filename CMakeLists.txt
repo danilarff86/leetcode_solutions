@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 project(leetcode-solutions LANGUAGES C CXX)
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)
