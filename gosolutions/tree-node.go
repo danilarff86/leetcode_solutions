@@ -2,6 +2,8 @@ package gosolutions
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 // TreeNode is definition of node in binary tree
@@ -39,4 +41,66 @@ func treeNodeToString(root *TreeNode) string {
 		q = append(q, node.Left, node.Right)
 	}
 	return "[" + output[:len(output)-2] + "]"
+}
+
+func treeNodeFromString(treeStr string) *TreeNode {
+	treeStr = strings.Trim(treeStr, " ")
+	treeStr = treeStr[1 : len(treeStr)-1]
+
+	nodes := strings.Split(treeStr, ",")
+
+	if len(nodes) == 0 || nodes[0] == "" || nodes[0] == "null" {
+		return nil
+	}
+
+	val, err := strconv.ParseInt(nodes[0], 10, 32)
+	if err != nil {
+		panic(err)
+	}
+	root := &TreeNode{
+		Val: int(val),
+	}
+	nodes = nodes[1:]
+
+	nodeQueue := make([]*TreeNode, 0, len(nodes))
+	nodeQueue = append(nodeQueue, root)
+
+	for len(nodes) > 0 {
+		item := strings.Trim(nodes[0], "")
+		nodes = nodes[1:]
+
+		node := nodeQueue[0]
+		nodeQueue = nodeQueue[1:]
+
+		if item != "null" {
+			val, err := strconv.ParseInt(item, 10, 32)
+			if err != nil {
+				panic(err)
+			}
+			node.Left = &TreeNode{
+				Val: int(val),
+			}
+			nodeQueue = append(nodeQueue, node.Left)
+		}
+
+		if len(nodes) == 0 {
+			break
+		}
+
+		item = strings.Trim(nodes[0], "")
+		nodes = nodes[1:]
+
+		if item != "null" {
+			val, err := strconv.ParseInt(item, 10, 32)
+			if err != nil {
+				panic(err)
+			}
+			node.Right = &TreeNode{
+				Val: int(val),
+			}
+			nodeQueue = append(nodeQueue, node.Right)
+		}
+	}
+
+	return root
 }
