@@ -14,13 +14,15 @@ func max(x, y int) int {
 }
 
 func rob(nums []int) int {
-	elements := len(nums)
-
-	dp := make([]int, elements+2)
-	for i := 0; i < elements; i++ {
-		dp[i+2] = max(dp[i+1], dp[i]+nums[i])
+	if len(nums) > 1 && nums[0] > nums[1] {
+		nums[1] = nums[0]
 	}
-	return dp[elements+1]
+
+	for i := 2; i < len(nums); i++ {
+		nums[i] = max(nums[i-1], nums[i-2]+nums[i])
+	}
+
+	return nums[len(nums)-1]
 }
 
 func TestHouseRobber(t *testing.T) {
