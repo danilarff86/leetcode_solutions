@@ -6,13 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func min(v1, v2 int) int {
-	if v1 < v2 {
-		return v1
-	}
-	return v2
-}
-
 func minimumTotal(triangle [][]int) int {
 	tLen := len(triangle)
 	dp := make([][]int, tLen)

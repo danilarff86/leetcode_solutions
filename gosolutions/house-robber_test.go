@@ -6,13 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func max(x, y int) int {
-	if x < y {
-		return y
-	}
-	return x
-}
-
 func rob(nums []int) int {
 	if len(nums) > 1 && nums[0] > nums[1] {
 		nums[1] = nums[0]
