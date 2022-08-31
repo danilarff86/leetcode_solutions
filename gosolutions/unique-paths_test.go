@@ -7,20 +7,18 @@ import (
 )
 
 func uniquePaths(m int, n int) int {
-	prev := make([]int, m)
+	dp := make([]int, m)
 	for i := 0; i < m; i++ {
-		prev[i] = 1
-	}
-	current := make([]int, m)
-	current[0] = 1
-	for i := 1; i < n; i++ {
-		for j := 1; j < m; j++ {
-			current[j] = prev[j] + current[j-1]
-		}
-		current, prev = prev, current
+		dp[i] = 1
 	}
 
-	return prev[m-1]
+	for i := 1; i < n; i++ {
+		for j := 1; j < m; j++ {
+			dp[j] += dp[j-1]
+		}
+	}
+
+	return dp[m-1]
 }
 
 func TestUniquePaths(t *testing.T) {
